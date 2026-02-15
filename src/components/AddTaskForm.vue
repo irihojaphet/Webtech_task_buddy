@@ -34,38 +34,71 @@ function onKeydown(e) {
 </script>
 
 <template>
-  <section class="add-task" aria-labelledby="add-task-heading">
+  <section
+    class="add-task"
+    aria-labelledby="add-task-heading"
+    aria-describedby="add-task-desc"
+  >
     <h2 id="add-task-heading" class="visually-hidden">Add new task</h2>
+    <p id="add-task-desc" class="visually-hidden">Enter a task title, then add optional category, priority, and due date.</p>
     <div class="add-task-row">
-      <label for="new-task-input" class="visually-hidden">New task</label>
+      <label for="new-task-input" class="visually-hidden">New task title (required)</label>
       <input
         id="new-task-input"
         v-model="title"
         type="text"
         placeholder="New Task"
-        aria-label="New task title"
+        aria-label="New task title (required)"
+        aria-required="true"
         class="task-input"
+        autocomplete="off"
         @keydown="onKeydown"
       />
       <button
         type="button"
         class="btn btn-add"
         :disabled="!canSubmit"
-        aria-label="Add task"
+        aria-label="Add task to list"
         @click="submit"
       >
         Add Task
       </button>
     </div>
-    <div v-show="showOptions" class="add-options">
+    <button
+      type="button"
+      class="btn-options-toggle"
+      :aria-expanded="showOptions"
+      :aria-controls="showOptions ? 'add-task-options' : undefined"
+      aria-label="Show or hide optional task fields: category, priority, and due date"
+      @click="showOptions = !showOptions"
+    >
+      {{ showOptions ? 'Hide options' : 'Category, priority & due date' }}
+    </button>
+    <fieldset
+      id="add-task-options"
+      class="add-options"
+      :hidden="!showOptions"
+      aria-label="Optional task details"
+    >
+      <legend class="visually-hidden">Optional: category, priority, due date</legend>
       <label for="new-task-category">Category</label>
-      <select id="new-task-category" v-model="category" aria-label="Task category">
+      <select
+        id="new-task-category"
+        v-model="category"
+        aria-label="Task category"
+        aria-describedby="category-desc"
+      >
         <option v-for="cat in TASK_CATEGORIES" :key="cat" :value="cat">
           {{ cat }}
         </option>
       </select>
+      <span id="category-desc" class="visually-hidden">Choose Work, Personal, Shopping, or Other.</span>
       <label for="new-task-priority">Priority</label>
-      <select id="new-task-priority" v-model="priority" aria-label="Task priority">
+      <select
+        id="new-task-priority"
+        v-model="priority"
+        aria-label="Task priority"
+      >
         <option v-for="p in TASK_PRIORITIES" :key="p" :value="p">
           {{ p }}
         </option>
@@ -75,18 +108,10 @@ function onKeydown(e) {
         id="new-task-due"
         v-model="dueDate"
         type="date"
-        aria-label="Due date"
+        aria-label="Task due date (optional)"
         class="due-input"
       />
-    </div>
-    <button
-      type="button"
-      class="btn-options-toggle"
-      :aria-expanded="showOptions"
-      @click="showOptions = !showOptions"
-    >
-      {{ showOptions ? 'Hide options' : 'Category, priority & due date' }}
-    </button>
+    </fieldset>
   </section>
 </template>
 
@@ -160,7 +185,14 @@ function onKeydown(e) {
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
   margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
   align-items: center;
+  border: 0;
+  padding: 0;
+}
+
+.add-options[hidden] {
+  display: none;
 }
 
 .add-options label {

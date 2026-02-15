@@ -12,9 +12,17 @@ const emit = defineEmits(['complete', 'delete'])
 </script>
 
 <template>
-  <section class="task-list" aria-labelledby="task-list-heading">
+  <section
+    class="task-list"
+    aria-labelledby="task-list-heading"
+    :aria-label="tasks.length ? `Your tasks, ${tasks.length} item${tasks.length === 1 ? '' : 's'}.` : undefined"
+  >
     <h2 id="task-list-heading" class="visually-hidden">Your tasks</h2>
-    <ul class="tasks" role="list">
+    <ul
+      class="tasks"
+      role="list"
+      :aria-label="tasks.length ? `Task list, ${tasks.length} task${tasks.length === 1 ? '' : 's'}` : 'Empty task list'"
+    >
       <TaskItem
         v-for="task in tasks"
         :key="task.id"

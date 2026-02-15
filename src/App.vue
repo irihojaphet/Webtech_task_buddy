@@ -14,6 +14,7 @@ watch(
 </script>
 
 <template>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <router-view />
 </template>
 
@@ -27,5 +28,26 @@ watch(
 body {
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* Skip link: visible on focus for keyboard and screen reader users */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0.5rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: #6a1b9a;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 6px 6px;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
 }
 </style>

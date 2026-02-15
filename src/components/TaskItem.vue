@@ -1,4 +1,6 @@
 <script setup>
+import { computed } from 'vue'
+
 const props = defineProps({
   task: {
     type: Object,
@@ -7,6 +9,23 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['complete', 'delete'])
+
+const taskAccessibleName = computed(() => {
+  const parts = [props.task.title]
+  if (props.task.completed) parts.push('Completed')
+  if (props.task.category) parts.push(props.task.category)
+  if (props.task.priority) parts.push(`${props.task.priority} priority`)
+  if (props.task.dueDate) parts.push(`Due ${props.task.dueDate}`)
+  return parts.join(', ')
+})
+
+const completeButtonLabel = computed(() =>
+  props.task.completed
+    ? `Mark "${props.task.title}" as incomplete`
+    : `Mark "${props.task.title}" as complete`
+)
+
+const deleteButtonLabel = computed(() => `Delete task "${props.task.title}"`)
 </script>
 
 <template>
@@ -14,6 +33,7 @@ const emit = defineEmits(['complete', 'delete'])
     class="task-item"
     :class="{ completed: task.completed }"
     role="listitem"
+    :aria-label="taskAccessibleName"
   >
     <span class="task-title">{{ task.title }}</span>
     <span v-if="task.category || task.dueDate || task.priority" class="task-meta">
@@ -27,11 +47,11 @@ const emit = defineEmits(['complete', 'delete'])
       </span>
       <span v-if="task.dueDate" class="meta-date">{{ task.dueDate }}</span>
     </span>
-    <div class="task-actions">
+    <div class="task-actions" role="group" aria-label="Actions for this task">
       <button
         type="button"
         class="btn-action complete"
-        aria-label="Mark task as complete"
+        :aria-label="completeButtonLabel"
         @click="emit('complete', task.id)"
       >
         Complete
@@ -39,7 +59,7 @@ const emit = defineEmits(['complete', 'delete'])
       <button
         type="button"
         class="btn-action delete"
-        aria-label="Delete task"
+        :aria-label="deleteButtonLabel"
         @click="emit('delete', task.id)"
       >
         Delete

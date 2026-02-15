@@ -5,13 +5,26 @@ const counterStore = useCounterStore()
 </script>
 
 <template>
-  <section class="counter-section" aria-labelledby="counter-heading">
+  <section
+    class="counter-section"
+    aria-labelledby="counter-heading"
+    aria-describedby="counter-desc"
+  >
     <h2 id="counter-heading" class="visually-hidden">Counter</h2>
-    <p class="count-display">Count: {{ counterStore.count }}</p>
+    <p id="counter-desc" class="visually-hidden">Optional counter. Current value is announced when it changes.</p>
+    <p
+      class="count-display"
+      aria-live="polite"
+      aria-atomic="true"
+      role="status"
+      :aria-label="`Count: ${counterStore.count}`"
+    >
+      Count: {{ counterStore.count }}
+    </p>
     <button
       type="button"
       class="btn btn-increase"
-      aria-label="Increase count"
+      aria-label="Increase count by one"
       @click="counterStore.increment"
     >
       Increase +
