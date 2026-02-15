@@ -11,35 +11,20 @@
     "format": "oxfmt src/"
   },
   "dependencies": {
-    "pinia": "^3.0.4",
-    "vue": "beta",
-    "vue-router": "^5.0.1"
+    "pinia": "^2.3.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.3",
+    "@vitejs/plugin-vue": "^5.2.1",
     "@vue/test-utils": "^2.4.6",
-    "jsdom": "^27.4.0",
+    "jsdom": "^25.0.1",
     "oxfmt": "^0.27.0",
-    "vite": "beta",
+    "vite": "^6.0.3",
     "vite-plugin-vue-devtools": "^8.0.5",
-    "vitest": "^4.0.18"
+    "vitest": "^2.1.6"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
-  },
-  "overrides": {
-    "vue": "beta",
-    "@vue/compiler-core": "beta",
-    "@vue/compiler-dom": "beta",
-    "@vue/compiler-sfc": "beta",
-    "@vue/compiler-ssr": "beta",
-    "@vue/compiler-vapor": "beta",
-    "@vue/reactivity": "beta",
-    "@vue/runtime-core": "beta",
-    "@vue/runtime-dom": "beta",
-    "@vue/runtime-vapor": "beta",
-    "@vue/server-renderer": "beta",
-    "@vue/shared": "beta",
-    "@vue/compat": "beta"
   }
 }

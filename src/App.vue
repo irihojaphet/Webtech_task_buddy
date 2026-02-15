@@ -1,11 +1,31 @@
-<script setup></script>
+<script setup>
+import { useRoute } from 'vue-router'
+import { watch } from 'vue'
+
+const route = useRoute()
+
+watch(
+  () => route.path,
+  () => {
+    document.title = route.name === 'task' ? 'TaskBuddy' : 'TaskBuddy'
+  },
+  { immediate: true }
+)
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <router-view />
 </template>
 
-<style scoped></style>
+<style>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+</style>
