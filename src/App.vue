@@ -5,9 +5,17 @@ import { watch } from 'vue'
 const route = useRoute()
 
 watch(
-  () => route.path,
-  () => {
-    document.title = route.name === 'task' ? 'TaskBuddy' : 'TaskBuddy'
+  () => route.name,
+  (name) => {
+    const titles = {
+      login: 'Sign in – Task-Buddy',
+      signup: 'Sign up – Task-Buddy',
+      dashboard: 'Dashboard – Task-Buddy',
+      todo: 'To Do – Task-Buddy',
+      inProgress: 'In Progress – Task-Buddy',
+      completed: 'Done – Task-Buddy',
+    }
+    document.title = titles[name] || 'Task-Buddy'
   },
   { immediate: true }
 )
